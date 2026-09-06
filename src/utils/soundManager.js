@@ -1,30 +1,46 @@
 import { Howl, Howler } from 'howler';
 import { getAssetUrl } from './assets';
 
+export const TRACKS = {
+  STORY_INTRO: {
+    src: getAssetUrl('photovid/songPelipelibar.mp3'),
+    offset: 50 // 50s
+  },
+  CIPHER_LOVE: {
+    src: getAssetUrl('photovid/I love you (Full song) Bodyguard feat. Salman khan_ Kareena Kapoor(MP3_160K).mp3'),
+    offset: 85 // 1:25 sec
+  }
+};
+
 class SoundEngine {
   constructor() {
     this.sound = null;
+    this.currentSrc = null;
     this.isPlaying = false;
     this.isMuted = false;
-    this.targetStartOffset = 50; // Exactly 50 seconds
+    this.targetStartOffset = 50;
     this.hasUserInteracted = false;
     this.hasAppliedInitialSeek = false;
-    this.pendingPlayFromTap = false;
+    this.pendingPlay = false;
     this.listeners = new Set();
   }
 
-  init(src = getAssetUrl('photovid/songPelipelibar.mp3')) {
-    if (this.sound) return;
+  init(src = TRACKS.STORY_INTRO.src, startOffset = 50) {
+    if (this.sound && this.currentSrc === src) return;
+
+    this.currentSrc = src;
+    this.targetStartOffset = startOffset;
+    this.hasAppliedInitialSeek = false;
 
     this.sound = new Howl({
       src: [src],
-      html5: true, // Use HTML5 Audio for streaming 18MB audio & instant seeking
+      html5: true, // Use HTML5 Audio for streaming & instant seeking
       preload: true,
       volume: 0.85,
       loop: true,
       onload: () => {
-        if (this.pendingPlayFromTap) {
-          this.executeStartFrom50();
+        if (this.pendingPlay) {
+          this.executeStart();
         }
       },
       onplay: (id) => {
@@ -49,12 +65,10 @@ class SoundEngine {
       },
       onplayerror: (_id, err) => {
         console.warn('Audio playback error:', err);
-        // Mobile retry on next user interaction
-        this.pendingPlayFromTap = true;
+        this.pendingPlay = true;
       }
     });
 
-    // Attach metadata listener to underlying node if already created
     this.attachNodeListener();
   }
 
@@ -122,24 +136,56 @@ class SoundEngine {
     }
 
     if (!this.sound) {
-      this.init();
+      this.init(TRACKS.STORY_INTRO.src, startTime);
     }
 
-    this.executeStartFrom50();
+    this.executeStart();
   }
 
-  executeStartFrom50() {
+  // Smoothly switch audio tracks with seeking (e.g. for 5201314 Cipher)
+  switchTrack(newSrc, startTime = 0) {
+    if (this.currentSrc === newSrc && this.sound) {
+      return;
+    }
+
+    this.targetStartOffset = startTime;
+    this.hasAppliedInitialSeek = false;
+
+    if (this.sound) {
+      const oldSound = this.sound;
+      try {
+        oldSound.fade(oldSound.volume(), 0, 600);
+        setTimeout(() => {
+          try {
+            oldSound.stop();
+            oldSound.unload();
+          } catch (e) {}
+        }, 650);
+      } catch (e) {
+        oldSound.stop();
+      }
+      this.sound = null;
+    }
+
+    this.init(newSrc, startTime);
+
+    if (this.hasUserInteracted) {
+      this.executeStart();
+    }
+  }
+
+  executeStart() {
     if (!this.sound) return;
 
     try {
       const id = this.sound.play();
       this.applyOffset(id);
       this.isPlaying = true;
-      this.pendingPlayFromTap = false;
+      this.pendingPlay = false;
       this.notify();
     } catch (e) {
-      console.warn('Failed to start audio at 50s:', e);
-      this.pendingPlayFromTap = true;
+      console.warn('Failed to start audio at offset:', e);
+      this.pendingPlay = true;
     }
   }
 
@@ -177,7 +223,8 @@ class SoundEngine {
     const state = {
       isPlaying: this.sound ? this.sound.playing() : false,
       isMuted: this.isMuted,
-      hasInteracted: this.hasUserInteracted
+      hasInteracted: this.hasUserInteracted,
+      currentTrack: this.currentSrc
     };
     this.listeners.forEach(fn => fn(state));
   }

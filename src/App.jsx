@@ -14,6 +14,7 @@ import FinalReveal from './components/FinalReveal';
 import FloatingNav from './components/FloatingNav';
 import AmbientBackground from './components/AmbientBackground';
 import HeartBurst from './components/HeartBurst';
+import { soundManager, TRACKS } from './utils/soundManager';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -61,6 +62,9 @@ export default function App() {
 
   const handleNavigate = (targetId) => {
     setActiveSection(targetId);
+    if (targetId === 'code520') {
+      soundManager.switchTrack(TRACKS.CIPHER_LOVE.src, TRACKS.CIPHER_LOVE.offset);
+    }
     if (lenisRef.current) {
       const el = document.getElementById(targetId);
       if (el) {

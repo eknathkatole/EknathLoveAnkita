@@ -1,9 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { KeyRound, Sparkles, Heart } from 'lucide-react';
 import { triggerHeartBurst } from '../utils/loveEffects';
+import { soundManager, TRACKS } from '../utils/soundManager';
 
 export default function LoveCode() {
   const [isDecoded, setIsDecoded] = useState(false);
+  const sectionRef = useRef(null);
+  const hasSwitchedRef = useRef(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasSwitchedRef.current) {
+            hasSwitchedRef.current = true;
+            soundManager.switchTrack(TRACKS.CIPHER_LOVE.src, TRACKS.CIPHER_LOVE.offset);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const handleDecode = (e) => {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -11,10 +34,11 @@ export default function LoveCode() {
     const y = e.clientY || rect.top + rect.height / 2;
     triggerHeartBurst(x, y, { count: 12, symbols: ['❤️', '💖', '💕', '✨', '🌸', '🩷', '💌'] });
     setIsDecoded(true);
+    soundManager.switchTrack(TRACKS.CIPHER_LOVE.src, TRACKS.CIPHER_LOVE.offset);
   };
 
   return (
-    <section id="code520" className="cinematic-section" style={{ minHeight: '80vh', textAlign: 'center' }}>
+    <section ref={sectionRef} id="code520" className="cinematic-section" style={{ minHeight: '80vh', textAlign: 'center' }}>
       <div style={{ maxWidth: '780px', margin: '0 auto', width: '100%' }}>
         <span className="section-tag">
           <Heart size={12} color="#FF4F81" fill="#FF4F81" />
