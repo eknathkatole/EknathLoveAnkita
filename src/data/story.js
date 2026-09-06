@@ -1,6 +1,6 @@
 // Cinematic Story & Memory Archive for Ankita & Eknath
 // 100% Genuine chronology & chat excerpts
-// Strict rule: Couple photos (couple1.jpg, couple2.jpg, couple3.jpg) are ONLY used in Quiz.
+import { getAssetUrl } from '../utils/assets';
 
 export const STORY_DATA = {
   opening: {
@@ -13,7 +13,7 @@ export const STORY_DATA = {
     hint: "Sound on • Best experienced slowly"
   },
 
-  musicTrack: "/photovid/songPelipelibar.mp3",
+  musicTrack: getAssetUrl('photovid/songPelipelibar.mp3'),
   musicStartOffset: 50, // CRITICAL: Start immediately from 50 seconds on first tap
 
   // Memory Frequency Waves & Capsules
@@ -32,7 +32,7 @@ export const STORY_DATA = {
       number: "02",
       title: "MOTION & GRACE",
       type: "video",
-      videoSrc: "/photovid/VID_20260714_034926_982.mp4",
+      videoSrc: getAssetUrl('photovid/VID_20260714_034926_982.mp4'),
       date: "14 JULY 2026",
       caption: "Some memories don't stay static. They move.",
       desc: "A precious glance frozen in time."
@@ -52,7 +52,7 @@ export const STORY_DATA = {
       number: "04",
       title: "NATURAL & REAL",
       type: "video",
-      videoSrc: "/photovid/VID_20260714_034930_276.mp4",
+      videoSrc: getAssetUrl('photovid/VID_20260714_034930_276.mp4'),
       date: "14 JULY 2026",
       caption: "This one doesn't need a caption.",
       desc: "Purely you."
@@ -526,7 +526,7 @@ export const STORY_DATA = {
       id: "quiz-1",
       questionNumber: "01",
       leadText: "Do you remember this?",
-      image: "/photovid/couple1.jpg",
+      image: getAssetUrl('photovid/couple1.jpg'),
       question: "When did our actual first contact / call attempt happen?",
       options: [
         "16 March 2026 (When WhatsApp started)",
@@ -540,7 +540,7 @@ export const STORY_DATA = {
       id: "quiz-2",
       questionNumber: "02",
       leadText: "Okay... what about this one?",
-      image: "/photovid/couple2.jpg",
+      image: getAssetUrl('photovid/couple2.jpg'),
       question: "Who sent the first explicit 'Love you' in our chat?",
       options: [
         "Eknath on 6 June ('Okay good night... Love you 🫶🏻🤗')",
@@ -554,7 +554,7 @@ export const STORY_DATA = {
       id: "quiz-3",
       questionNumber: "03",
       leadText: "Last one.",
-      image: "/photovid/couple3.jpg",
+      image: getAssetUrl('photovid/couple3.jpg'),
       question: "What is the true meaning of our signature code 5201314?",
       options: [
         "A random bank OTP or lucky number",

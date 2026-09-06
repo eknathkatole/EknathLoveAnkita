@@ -1,12 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { Heart, Sparkles, Eye, Play, Pause, Volume2, VolumeX, X } from 'lucide-react';
 import { triggerHeartBurst } from '../utils/loveEffects';
+import { getAssetUrl } from '../utils/assets';
 
 const GALLERY_ITEMS = [
   // 3 Couple Images First
   {
     id: 'couple-1',
-    src: '/photovid/couple1.jpg',
+    src: getAssetUrl('photovid/couple1.jpg'),
     type: 'image',
     category: 'Forever With You',
     title: 'Our Forever Spark',
@@ -16,7 +17,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'couple-2',
-    src: '/photovid/couple2.jpg',
+    src: getAssetUrl('photovid/couple2.jpg'),
     type: 'image',
     category: 'Heart & Soul',
     title: 'In Your Warmth',
@@ -26,7 +27,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'couple-3',
-    src: '/photovid/couple3.jpg',
+    src: getAssetUrl('photovid/couple3.jpg'),
     type: 'image',
     category: 'Infinite Love',
     title: '5201314 In Real Life',
@@ -38,7 +39,7 @@ const GALLERY_ITEMS = [
   // Precious Confessions
   {
     id: 'her-confession',
-    src: '/photovid/herloveconfscrrenshort.jpg',
+    src: getAssetUrl('photovid/herloveconfscrrenshort.jpg'),
     type: 'image',
     category: 'Love Confession',
     title: "Ankita's Heartfelt Words",
@@ -47,7 +48,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'my-confession',
-    src: '/photovid/myloveconfscreenshort.jpg',
+    src: getAssetUrl('photovid/myloveconfscreenshort.jpg'),
     type: 'image',
     category: 'Love Confession',
     title: 'Words From My Heart',
@@ -58,7 +59,7 @@ const GALLERY_ITEMS = [
   // Sweet Memories & Captures
   {
     id: 'snap-1',
-    src: '/photovid/Snapchat-611997065.jpg',
+    src: getAssetUrl('photovid/Snapchat-611997065.jpg'),
     type: 'image',
     category: 'Sweet Moments',
     title: 'Your Radiant Smile',
@@ -67,7 +68,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'snap-2',
-    src: '/photovid/Snapchat-749458165.jpg',
+    src: getAssetUrl('photovid/Snapchat-749458165.jpg'),
     type: 'image',
     category: 'Sweet Moments',
     title: 'Pure Innocence',
@@ -76,7 +77,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'img-1',
-    src: '/photovid/IMG_20260714_161933_598.jpg',
+    src: getAssetUrl('photovid/IMG_20260714_161933_598.jpg'),
     type: 'image',
     category: 'Precious Keepsake',
     title: 'Timeless Beauty',
@@ -85,7 +86,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'img-2',
-    src: '/photovid/IMG_20260714_161936_381.jpg',
+    src: getAssetUrl('photovid/IMG_20260714_161936_381.jpg'),
     type: 'image',
     category: 'Precious Keepsake',
     title: 'My Favorite View',
@@ -96,7 +97,7 @@ const GALLERY_ITEMS = [
   // 2 Video Memories
   {
     id: 'vid-1',
-    src: '/photovid/VID_20260714_034926_982.mp4',
+    src: getAssetUrl('photovid/VID_20260714_034926_982.mp4'),
     type: 'video',
     category: 'Living Memory',
     title: 'Motion & Magic',
@@ -105,7 +106,7 @@ const GALLERY_ITEMS = [
   },
   {
     id: 'vid-2',
-    src: '/photovid/VID_20260714_034930_276.mp4',
+    src: getAssetUrl('photovid/VID_20260714_034930_276.mp4'),
     type: 'video',
     category: 'Living Memory',
     title: 'Unfiltered Grace',

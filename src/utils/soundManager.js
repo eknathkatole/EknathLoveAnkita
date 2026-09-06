@@ -1,4 +1,5 @@
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
+import { getAssetUrl } from './assets';
 
 class SoundEngine {
   constructor() {
@@ -8,17 +9,18 @@ class SoundEngine {
     this.targetStartOffset = 50; // Exactly 50 seconds
     this.hasUserInteracted = false;
     this.hasAppliedInitialSeek = false;
+    this.pendingPlayFromTap = false;
     this.listeners = new Set();
   }
 
-  init(src = '/photovid/songPelipelibar.mp3') {
+  init(src = getAssetUrl('photovid/songPelipelibar.mp3')) {
     if (this.sound) return;
 
     this.sound = new Howl({
       src: [src],
-      html5: true, // Use HTML5 Audio for seamless streaming of 18MB audio & instant seeking
+      html5: true, // Use HTML5 Audio for streaming 18MB audio & instant seeking
       preload: true,
-      volume: 0.8,
+      volume: 0.85,
       loop: true,
       onload: () => {
         if (this.pendingPlayFromTap) {
@@ -27,22 +29,7 @@ class SoundEngine {
       },
       onplay: (id) => {
         this.isPlaying = true;
-
-        // Ensure 50s offset is applied upon first playback start
-        if (!this.hasAppliedInitialSeek) {
-          try {
-            this.sound.seek(this.targetStartOffset, id);
-            // Also enforce directly on the underlying HTML5 audio node if available
-            const soundObj = this.sound._sounds && this.sound._sounds[0];
-            if (soundObj && soundObj._node) {
-              soundObj._node.currentTime = this.targetStartOffset;
-            }
-            this.hasAppliedInitialSeek = true;
-          } catch (e) {
-            console.warn('Seek error on play:', e);
-          }
-        }
-
+        this.applyOffset(id);
         this.notify();
       },
       onpause: () => {
@@ -62,14 +49,77 @@ class SoundEngine {
       },
       onplayerror: (_id, err) => {
         console.warn('Audio playback error:', err);
+        // Mobile retry on next user interaction
+        this.pendingPlayFromTap = true;
       }
     });
+
+    // Attach metadata listener to underlying node if already created
+    this.attachNodeListener();
+  }
+
+  attachNodeListener() {
+    try {
+      const soundObj = this.sound?._sounds?.[0];
+      if (soundObj?._node) {
+        const node = soundObj._node;
+        node.addEventListener('loadedmetadata', () => {
+          if (!this.hasAppliedInitialSeek && this.isPlaying) {
+            node.currentTime = this.targetStartOffset;
+            this.hasAppliedInitialSeek = true;
+          }
+        }, { once: true });
+      }
+    } catch (e) {
+      console.warn('Node listener attach:', e);
+    }
+  }
+
+  applyOffset(id) {
+    if (this.hasAppliedInitialSeek) return;
+
+    try {
+      if (id !== undefined) {
+        this.sound.seek(this.targetStartOffset, id);
+      } else {
+        this.sound.seek(this.targetStartOffset);
+      }
+
+      const soundObj = this.sound?._sounds?.[0];
+      if (soundObj?._node) {
+        const node = soundObj._node;
+        if (node.readyState >= 1) {
+          node.currentTime = this.targetStartOffset;
+          this.hasAppliedInitialSeek = true;
+        } else {
+          node.addEventListener('canplay', () => {
+            if (!this.hasAppliedInitialSeek) {
+              node.currentTime = this.targetStartOffset;
+              this.hasAppliedInitialSeek = true;
+            }
+          }, { once: true });
+        }
+      } else {
+        this.hasAppliedInitialSeek = true;
+      }
+    } catch (e) {
+      console.warn('Seek error on play:', e);
+    }
   }
 
   // CRITICAL: Called on the very first user tap on the opening screen
   playFromOpeningTap(startTime = 50) {
     this.hasUserInteracted = true;
     this.targetStartOffset = startTime;
+
+    // Mobile audio context unlock
+    try {
+      if (Howler.ctx && Howler.ctx.state === 'suspended') {
+        Howler.ctx.resume();
+      }
+    } catch (e) {
+      console.warn('AudioContext resume:', e);
+    }
 
     if (!this.sound) {
       this.init();
@@ -82,23 +132,8 @@ class SoundEngine {
     if (!this.sound) return;
 
     try {
-      // Play immediately to capture the user gesture
       const id = this.sound.play();
-
-      // Immediately seek to 50 seconds
-      if (id !== undefined) {
-        this.sound.seek(this.targetStartOffset, id);
-      } else {
-        this.sound.seek(this.targetStartOffset);
-      }
-
-      // Directly update the underlying audio element's currentTime
-      const soundObj = this.sound._sounds && this.sound._sounds[0];
-      if (soundObj && soundObj._node) {
-        soundObj._node.currentTime = this.targetStartOffset;
-      }
-
-      this.hasAppliedInitialSeek = true;
+      this.applyOffset(id);
       this.isPlaying = true;
       this.pendingPlayFromTap = false;
       this.notify();
