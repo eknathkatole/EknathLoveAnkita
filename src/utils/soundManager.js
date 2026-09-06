@@ -1,216 +1,190 @@
-import { Howl, Howler } from 'howler';
 import { getAssetUrl } from './assets';
 
 export const TRACKS = {
   STORY_INTRO: {
+    id: 'intro',
     src: getAssetUrl('photovid/songPelipelibar.mp3'),
-    offset: 50 // 50s
+    offset: 50 // 50 seconds
   },
   CIPHER_LOVE: {
-    src: getAssetUrl('photovid/I love you (Full song) Bodyguard feat. Salman khan_ Kareena Kapoor(MP3_160K).mp3'),
-    offset: 85 // 1:25 sec
+    id: 'cipher',
+    src: getAssetUrl('photovid/bodyguard_iloveyou.mp3'),
+    offset: 85 // 1:25 = 85 seconds
   }
 };
 
 class SoundEngine {
   constructor() {
-    this.sound = null;
-    this.currentSrc = null;
+    this.deckIntro = null;
+    this.deckCipher = null;
+    this.activeDeck = 'intro';
     this.isPlaying = false;
     this.isMuted = false;
-    this.targetStartOffset = 50;
     this.hasUserInteracted = false;
-    this.hasAppliedInitialSeek = false;
-    this.pendingPlay = false;
     this.listeners = new Set();
   }
 
-  init(src = TRACKS.STORY_INTRO.src, startOffset = 50) {
-    if (this.sound && this.currentSrc === src) return;
+  initDecks() {
+    if (this.deckIntro && this.deckCipher) return;
 
-    this.currentSrc = src;
-    this.targetStartOffset = startOffset;
-    this.hasAppliedInitialSeek = false;
+    // Deck Intro (First Song)
+    this.deckIntro = new Audio();
+    this.deckIntro.src = TRACKS.STORY_INTRO.src;
+    this.deckIntro.preload = 'auto';
+    this.deckIntro.loop = true;
+    this.deckIntro.volume = 0.85;
 
-    this.sound = new Howl({
-      src: [src],
-      html5: true, // Use HTML5 Audio for streaming & instant seeking
-      preload: true,
-      volume: 0.85,
-      loop: true,
-      onload: () => {
-        if (this.pendingPlay) {
-          this.executeStart();
-        }
-      },
-      onplay: (id) => {
+    // Deck Cipher (Bodyguard I Love You)
+    this.deckCipher = new Audio();
+    this.deckCipher.src = TRACKS.CIPHER_LOVE.src;
+    this.deckCipher.preload = 'auto';
+    this.deckCipher.loop = true;
+    this.deckCipher.volume = 0.85;
+
+    // Event listeners for Deck Intro
+    this.deckIntro.addEventListener('play', () => {
+      if (this.activeDeck === 'intro') {
         this.isPlaying = true;
-        this.applyOffset(id);
         this.notify();
-      },
-      onpause: () => {
+      }
+    });
+    this.deckIntro.addEventListener('pause', () => {
+      if (this.activeDeck === 'intro') {
         this.isPlaying = false;
         this.notify();
-      },
-      onstop: () => {
-        this.isPlaying = false;
-        this.notify();
-      },
-      onend: () => {
-        this.isPlaying = false;
-        this.notify();
-      },
-      onloaderror: (_id, err) => {
-        console.warn('Audio load error:', err);
-      },
-      onplayerror: (_id, err) => {
-        console.warn('Audio playback error:', err);
-        this.pendingPlay = true;
       }
     });
 
-    this.attachNodeListener();
+    // Event listeners for Deck Cipher
+    this.deckCipher.addEventListener('play', () => {
+      if (this.activeDeck === 'cipher') {
+        this.isPlaying = true;
+        this.notify();
+      }
+    });
+    this.deckCipher.addEventListener('pause', () => {
+      if (this.activeDeck === 'cipher') {
+        this.isPlaying = false;
+        this.notify();
+      }
+    });
   }
 
-  attachNodeListener() {
-    try {
-      const soundObj = this.sound?._sounds?.[0];
-      if (soundObj?._node) {
-        const node = soundObj._node;
-        node.addEventListener('loadedmetadata', () => {
-          if (!this.hasAppliedInitialSeek && this.isPlaying) {
-            node.currentTime = this.targetStartOffset;
-            this.hasAppliedInitialSeek = true;
-          }
-        }, { once: true });
-      }
-    } catch (e) {
-      console.warn('Node listener attach:', e);
-    }
-  }
-
-  applyOffset(id) {
-    if (this.hasAppliedInitialSeek) return;
-
-    try {
-      if (id !== undefined) {
-        this.sound.seek(this.targetStartOffset, id);
-      } else {
-        this.sound.seek(this.targetStartOffset);
-      }
-
-      const soundObj = this.sound?._sounds?.[0];
-      if (soundObj?._node) {
-        const node = soundObj._node;
-        if (node.readyState >= 1) {
-          node.currentTime = this.targetStartOffset;
-          this.hasAppliedInitialSeek = true;
-        } else {
-          node.addEventListener('canplay', () => {
-            if (!this.hasAppliedInitialSeek) {
-              node.currentTime = this.targetStartOffset;
-              this.hasAppliedInitialSeek = true;
-            }
-          }, { once: true });
-        }
-      } else {
-        this.hasAppliedInitialSeek = true;
-      }
-    } catch (e) {
-      console.warn('Seek error on play:', e);
-    }
-  }
-
-  // CRITICAL: Called on the very first user tap on the opening screen
+  // CRITICAL: Called on the opening screen tap gesture
+  // Unlocks BOTH audio elements synchronously within the user gesture context
   playFromOpeningTap(startTime = 50) {
     this.hasUserInteracted = true;
-    this.targetStartOffset = startTime;
+    this.initDecks();
+    this.activeDeck = 'intro';
 
-    // Mobile audio context unlock
+    // 1. Play & Seek Deck A (Intro Song)
     try {
-      if (Howler.ctx && Howler.ctx.state === 'suspended') {
-        Howler.ctx.resume();
+      this.deckIntro.currentTime = startTime;
+    } catch (e) {}
+
+    const playIntro = this.deckIntro.play();
+    if (playIntro !== undefined) {
+      playIntro
+        .then(() => {
+          this.isPlaying = true;
+          try {
+            this.deckIntro.currentTime = startTime;
+          } catch (e) {}
+          this.notify();
+        })
+        .catch((err) => {
+          console.warn('Intro play error:', err);
+        });
+    }
+
+    // 2. Pre-unlock Deck B (Bodyguard) in the SAME tap gesture so iOS/Android never blocks it later!
+    try {
+      this.deckCipher.currentTime = TRACKS.CIPHER_LOVE.offset;
+      const playCipherUnlock = this.deckCipher.play();
+      if (playCipherUnlock !== undefined) {
+        playCipherUnlock
+          .then(() => {
+            // Immediately pause Deck B now that the browser permission is granted!
+            this.deckCipher.pause();
+            this.deckCipher.currentTime = TRACKS.CIPHER_LOVE.offset;
+          })
+          .catch(() => {});
       }
-    } catch (e) {
-      console.warn('AudioContext resume:', e);
-    }
-
-    if (!this.sound) {
-      this.init(TRACKS.STORY_INTRO.src, startTime);
-    }
-
-    this.executeStart();
+    } catch (e) {}
   }
 
-  // Smoothly switch audio tracks with seeking (e.g. for 5201314 Cipher)
-  switchTrack(newSrc, startTime = 0) {
-    if (this.currentSrc === newSrc && this.sound) {
+  // Seamlessly switch to Deck B (The 5201314 Cipher) on scroll or click
+  switchTrack(newSrc, startTime = 85, trackId = 'cipher') {
+    this.initDecks();
+
+    if (this.activeDeck === trackId && this.isPlaying) {
       return;
     }
 
-    this.targetStartOffset = startTime;
-    this.hasAppliedInitialSeek = false;
+    this.activeDeck = trackId;
 
-    if (this.sound) {
-      const oldSound = this.sound;
-      try {
-        oldSound.fade(oldSound.volume(), 0, 600);
-        setTimeout(() => {
-          try {
-            oldSound.stop();
-            oldSound.unload();
-          } catch (e) {}
-        }, 650);
-      } catch (e) {
-        oldSound.stop();
+    if (trackId === 'cipher') {
+      // Pause Deck Intro
+      if (this.deckIntro && !this.deckIntro.paused) {
+        this.deckIntro.pause();
       }
-      this.sound = null;
-    }
 
-    this.init(newSrc, startTime);
+      // Play Deck Cipher at 1:25
+      try {
+        this.deckCipher.currentTime = startTime;
+      } catch (e) {}
 
-    if (this.hasUserInteracted) {
-      this.executeStart();
-    }
-  }
-
-  executeStart() {
-    if (!this.sound) return;
-
-    try {
-      const id = this.sound.play();
-      this.applyOffset(id);
-      this.isPlaying = true;
-      this.pendingPlay = false;
-      this.notify();
-    } catch (e) {
-      console.warn('Failed to start audio at offset:', e);
-      this.pendingPlay = true;
+      const p = this.deckCipher.play();
+      if (p !== undefined) {
+        p.then(() => {
+          this.isPlaying = true;
+          try {
+            this.deckCipher.currentTime = startTime;
+          } catch (e) {}
+          this.notify();
+        }).catch((err) => {
+          console.warn('Deck cipher play error on mobile:', err);
+          // If browser needed tap retry, mark active
+          this.isPlaying = false;
+          this.notify();
+        });
+      }
+    } else {
+      // Switch back to Intro if requested
+      if (this.deckCipher && !this.deckCipher.paused) {
+        this.deckCipher.pause();
+      }
+      try {
+        this.deckIntro.currentTime = startTime;
+      } catch (e) {}
+      this.deckIntro.play().catch(() => {});
     }
   }
 
   togglePlayPause() {
-    if (!this.sound) {
-      this.playFromOpeningTap(this.targetStartOffset);
+    this.initDecks();
+    const currentAudio = this.activeDeck === 'cipher' ? this.deckCipher : this.deckIntro;
+
+    if (!currentAudio) {
+      this.playFromOpeningTap(50);
       return;
     }
 
-    if (this.sound.playing()) {
-      this.sound.pause();
+    if (!currentAudio.paused) {
+      currentAudio.pause();
     } else {
-      const id = this.sound.play();
-      if (!this.hasAppliedInitialSeek) {
-        this.sound.seek(this.targetStartOffset, id);
-        this.hasAppliedInitialSeek = true;
+      const p = currentAudio.play();
+      if (p !== undefined) {
+        p.catch((err) => console.warn('Play toggle error:', err));
       }
     }
-    this.notify();
   }
 
   toggleMute() {
-    if (!this.sound) return;
+    this.initDecks();
     this.isMuted = !this.isMuted;
-    this.sound.mute(this.isMuted);
+    if (this.deckIntro) this.deckIntro.muted = this.isMuted;
+    if (this.deckCipher) this.deckCipher.muted = this.isMuted;
     this.notify();
   }
 
@@ -220,13 +194,14 @@ class SoundEngine {
   }
 
   notify() {
+    const currentAudio = this.activeDeck === 'cipher' ? this.deckCipher : this.deckIntro;
     const state = {
-      isPlaying: this.sound ? this.sound.playing() : false,
+      isPlaying: currentAudio ? !currentAudio.paused : false,
       isMuted: this.isMuted,
       hasInteracted: this.hasUserInteracted,
-      currentTrack: this.currentSrc
+      currentTrack: this.activeDeck === 'cipher' ? TRACKS.CIPHER_LOVE.src : TRACKS.STORY_INTRO.src
     };
-    this.listeners.forEach(fn => fn(state));
+    this.listeners.forEach((fn) => fn(state));
   }
 }
 
