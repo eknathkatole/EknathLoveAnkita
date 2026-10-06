@@ -87,6 +87,30 @@ const ANKITA_MEDIA = [
   }
 ];
 
+const EKNATH_PHOTOS = [
+  { id: 'ek-1', src: getAssetUrl('photovid/IMG_20260927_174359.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-2', src: getAssetUrl('photovid/IMG_20260927_174404.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-3', src: getAssetUrl('photovid/IMG_20260927_174419.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-4', src: getAssetUrl('photovid/IMG_20260927_174422.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-5', src: getAssetUrl('photovid/IMG_20260927_174722.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-6', src: getAssetUrl('photovid/IMG_20260927_174725.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-7', src: getAssetUrl('photovid/IMG_20260927_174738.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-8', src: getAssetUrl('photovid/IMG_20260927_174743.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-9', src: getAssetUrl('photovid/IMG_20260927_174846.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-10', src: getAssetUrl('photovid/IMG_20260927_174848.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-11', src: getAssetUrl('photovid/IMG_20260927_174855.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-12', src: getAssetUrl('photovid/IMG_20260927_174859.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-13', src: getAssetUrl('photovid/IMG_20260927_174911.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-14', src: getAssetUrl('photovid/IMG_20260927_174918.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-15', src: getAssetUrl('photovid/IMG_20260927_175303.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-16', src: getAssetUrl('photovid/IMG_20260927_175308.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-17', src: getAssetUrl('photovid/IMG_20260927_182516.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-18', src: getAssetUrl('photovid/IMG_20260927_182548.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-19', src: getAssetUrl('photovid/IMG_20260927_182650.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-20', src: getAssetUrl('photovid/IMG_20260927_183651.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
+  { id: 'ek-21', src: getAssetUrl('photovid/IMG_20260927_184002.jpg'), date: '27 SEPT 2026', title: 'Eknath' }
+];
+
 export default function AnkitaMuse() {
   const [selectedItem, setSelectedItem] = useState(null);
   const [videoPlaying, setVideoPlaying] = useState(false);
@@ -425,6 +449,138 @@ export default function AnkitaMuse() {
             </div>
           ))}
         </div>
+
+        {/* Eknath Photos Grid - Clean, Pure Photography (No descriptions as requested) */}
+        <div style={{ marginTop: '72px', borderTop: '1px solid rgba(255, 179, 198, 0.2)', paddingTop: '54px' }}>
+          <span className="section-tag">
+            <Heart size={12} color="#FF4F81" fill="#FF4F81" />
+            Through Her Eyes
+            <Heart size={12} color="#FF4F81" fill="#FF4F81" />
+          </span>
+          <h3 className="section-title-editorial" style={{ fontSize: 'clamp(1.8rem, 4vw, 2.6rem)', marginBottom: '32px' }}>
+            Eknath • 27 September 2026
+          </h3>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',
+            gap: '22px',
+            width: '100%'
+          }}>
+            {EKNATH_PHOTOS.map((item) => (
+              <div
+                key={item.id}
+                onClick={() => setSelectedItem(item)}
+                style={{
+                  borderRadius: '22px',
+                  overflow: 'hidden',
+                  background: '#1D0C17',
+                  border: '1.5px solid rgba(255, 179, 198, 0.3)',
+                  boxShadow: '0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 79, 129, 0.12)',
+                  cursor: 'pointer',
+                  transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease',
+                  position: 'relative'
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-6px)';
+                  e.currentTarget.style.boxShadow = '0 18px 40px rgba(0, 0, 0, 0.65), 0 0 25px rgba(255, 79, 129, 0.35)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0)';
+                  e.currentTarget.style.boxShadow = '0 12px 35px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 79, 129, 0.12)';
+                }}
+              >
+                {/* Photo Frame with Ambient Blur & 100% visible contain fit */}
+                <div style={{
+                  position: 'relative',
+                  width: '100%',
+                  height: '340px',
+                  overflow: 'hidden',
+                  background: 'radial-gradient(circle at center, #240E1B 0%, #140710 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center'
+                }}>
+                  {/* Ambient Backdrop */}
+                  <div style={{
+                    position: 'absolute',
+                    inset: '-10px',
+                    backgroundImage: `url(${item.src})`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    filter: 'blur(20px) brightness(0.4)',
+                    opacity: 0.7,
+                    transform: 'scale(1.1)',
+                    pointerEvents: 'none'
+                  }} />
+
+                  {/* 100% Fully Visible Image */}
+                  <img
+                    src={item.src}
+                    alt={item.title || 'Photo'}
+                    loading="lazy"
+                    style={{
+                      position: 'relative',
+                      zIndex: 2,
+                      maxWidth: '100%',
+                      maxHeight: '100%',
+                      width: 'auto',
+                      height: 'auto',
+                      objectFit: 'contain',
+                      display: 'block',
+                      filter: 'drop-shadow(0 10px 22px rgba(0, 0, 0, 0.7))',
+                      transition: 'transform 0.4s ease'
+                    }}
+                  />
+
+                  {/* Love Button */}
+                  <button
+                    onClick={handleHeartClick}
+                    style={{
+                      position: 'absolute',
+                      top: '12px',
+                      right: '12px',
+                      zIndex: 5,
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: 'rgba(36, 16, 27, 0.85)',
+                      backdropFilter: 'blur(8px)',
+                      border: '1px solid rgba(255, 79, 129, 0.45)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#FF4F81',
+                      cursor: 'pointer',
+                      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.5)'
+                    }}
+                    aria-label="Send love"
+                  >
+                    <Heart size={14} fill="#FF4F81" />
+                  </button>
+
+                  {/* Date Badge (No text description) */}
+                  <div style={{
+                    position: 'absolute',
+                    bottom: '10px',
+                    left: '10px',
+                    zIndex: 5,
+                    padding: '3px 10px',
+                    borderRadius: '999px',
+                    background: 'rgba(22, 10, 18, 0.85)',
+                    backdropFilter: 'blur(6px)',
+                    border: '1px solid rgba(255, 179, 198, 0.3)',
+                    fontSize: '0.65rem',
+                    letterSpacing: '0.12em',
+                    color: '#FFE5EC'
+                  }}>
+                    {item.date}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Lightbox Modal */}
@@ -509,7 +665,7 @@ export default function AnkitaMuse() {
 
               <img
                 src={selectedItem.src}
-                alt={selectedItem.title}
+                alt={selectedItem.title || 'Photo'}
                 style={{
                   position: 'relative',
                   zIndex: 2,
@@ -540,19 +696,21 @@ export default function AnkitaMuse() {
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: '1.75rem',
                 color: '#FFF7FA',
-                marginBottom: '8px'
+                marginBottom: selectedItem.caption ? '8px' : '0'
               }}>
                 {selectedItem.title}
               </h3>
-              <p style={{
-                fontSize: '0.95rem',
-                color: '#FFE5EC',
-                fontStyle: 'italic',
-                lineHeight: '1.5',
-                margin: 0
-              }}>
-                "{selectedItem.caption}"
-              </p>
+              {selectedItem.caption && (
+                <p style={{
+                  fontSize: '0.95rem',
+                  color: '#FFE5EC',
+                  fontStyle: 'italic',
+                  lineHeight: '1.5',
+                  margin: 0
+                }}>
+                  "{selectedItem.caption}"
+                </p>
+              )}
             </div>
           </div>
         </div>
