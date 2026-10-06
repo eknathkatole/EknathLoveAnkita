@@ -10,6 +10,7 @@ export default function FloatingNav({ activeSection, onNavigate }) {
   ];
 
   const secondaryItems = [
+    { id: 'ankita', label: 'ANKITA ♡' },
     { id: 'future', label: 'OUR FUTURE' },
     { id: 'quiz', label: 'QUIZ' },
     { id: 'final', label: 'FOR YOU' }

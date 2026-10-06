@@ -8,6 +8,7 @@ import MilestoneJourney from './components/MilestoneJourney';
 import LoveCode from './components/LoveCode';
 import MemoryFrequency from './components/MemoryFrequency';
 import RomanticGallery from './components/RomanticGallery';
+import AnkitaMuse from './components/AnkitaMuse';
 import FutureChapter from './components/FutureChapter';
 import Quiz from './components/Quiz';
 import FinalReveal from './components/FinalReveal';
@@ -94,6 +95,7 @@ export default function App() {
             <LoveCode />
             <MemoryFrequency />
             <RomanticGallery />
+            <AnkitaMuse />
             <FutureChapter />
             <Quiz />
             <FinalReveal />
