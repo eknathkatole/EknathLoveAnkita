@@ -4,7 +4,7 @@ import { triggerHeartBurst } from '../utils/loveEffects';
 import { getAssetUrl } from '../utils/assets';
 
 const GALLERY_ITEMS = [
-  // 3 Couple Images First
+  // Couple Portraits (Featured First)
   {
     id: 'couple-1',
     src: getAssetUrl('photovid/couple1.jpg'),
@@ -33,6 +33,36 @@ const GALLERY_ITEMS = [
     title: '5201314 In Real Life',
     quote: '5201314 — Loving you today, tomorrow, and through every lifetime yet to come.',
     date: '5201314',
+    featured: true
+  },
+  {
+    id: 'couple-4',
+    src: getAssetUrl('photovid/IMG-20260916-WA0015.jpg'),
+    type: 'image',
+    category: 'Two Souls One Heart',
+    title: 'Pure Togetherness',
+    quote: 'With you by my side, every second becomes an eternal memory.',
+    date: '16 SEPTEMBER 2026',
+    featured: true
+  },
+  {
+    id: 'couple-5',
+    src: getAssetUrl('photovid/IMG-20260916-WA0016.jpg'),
+    type: 'image',
+    category: 'Endless Love',
+    title: 'Bound by Destinies',
+    quote: 'In every whisper of the wind and beat of my heart, it has always been you.',
+    date: '16 SEPTEMBER 2026',
+    featured: true
+  },
+  {
+    id: 'couple-6',
+    src: getAssetUrl('photovid/IMG-20260916-WA0017.jpg'),
+    type: 'image',
+    category: 'My Safe Haven',
+    title: 'Forever in Your Arms',
+    quote: 'You are my dream that came true, the love I will cherish for all eternity.',
+    date: '16 SEPTEMBER 2026',
     featured: true
   },
 
