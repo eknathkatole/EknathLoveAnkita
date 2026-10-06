@@ -88,27 +88,27 @@ const ANKITA_MEDIA = [
 ];
 
 const EKNATH_PHOTOS = [
-  { id: 'ek-1', src: getAssetUrl('photovid/IMG_20260927_174359.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-2', src: getAssetUrl('photovid/IMG_20260927_174404.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-3', src: getAssetUrl('photovid/IMG_20260927_174419.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-4', src: getAssetUrl('photovid/IMG_20260927_174422.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-5', src: getAssetUrl('photovid/IMG_20260927_174722.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-6', src: getAssetUrl('photovid/IMG_20260927_174725.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-7', src: getAssetUrl('photovid/IMG_20260927_174738.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-8', src: getAssetUrl('photovid/IMG_20260927_174743.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-9', src: getAssetUrl('photovid/IMG_20260927_174846.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-10', src: getAssetUrl('photovid/IMG_20260927_174848.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-11', src: getAssetUrl('photovid/IMG_20260927_174855.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-12', src: getAssetUrl('photovid/IMG_20260927_174859.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-13', src: getAssetUrl('photovid/IMG_20260927_174911.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-14', src: getAssetUrl('photovid/IMG_20260927_174918.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-15', src: getAssetUrl('photovid/IMG_20260927_175303.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-16', src: getAssetUrl('photovid/IMG_20260927_175308.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-17', src: getAssetUrl('photovid/IMG_20260927_182516.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-18', src: getAssetUrl('photovid/IMG_20260927_182548.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-19', src: getAssetUrl('photovid/IMG_20260927_182650.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-20', src: getAssetUrl('photovid/IMG_20260927_183651.jpg'), date: '27 SEPT 2026', title: 'Eknath' },
-  { id: 'ek-21', src: getAssetUrl('photovid/IMG_20260927_184002.jpg'), date: '27 SEPT 2026', title: 'Eknath' }
+  { id: 'ek-1', src: getAssetUrl('photovid/IMG_20260927_174359.jpg'), title: 'Eknath' },
+  { id: 'ek-2', src: getAssetUrl('photovid/IMG_20260927_174404.jpg'), title: 'Eknath' },
+  { id: 'ek-3', src: getAssetUrl('photovid/IMG_20260927_174419.jpg'), title: 'Eknath' },
+  { id: 'ek-4', src: getAssetUrl('photovid/IMG_20260927_174422.jpg'), title: 'Eknath' },
+  { id: 'ek-5', src: getAssetUrl('photovid/IMG_20260927_174722.jpg'), title: 'Eknath' },
+  { id: 'ek-6', src: getAssetUrl('photovid/IMG_20260927_174725.jpg'), title: 'Eknath' },
+  { id: 'ek-7', src: getAssetUrl('photovid/IMG_20260927_174738.jpg'), title: 'Eknath' },
+  { id: 'ek-8', src: getAssetUrl('photovid/IMG_20260927_174743.jpg'), title: 'Eknath' },
+  { id: 'ek-9', src: getAssetUrl('photovid/IMG_20260927_174846.jpg'), title: 'Eknath' },
+  { id: 'ek-10', src: getAssetUrl('photovid/IMG_20260927_174848.jpg'), title: 'Eknath' },
+  { id: 'ek-11', src: getAssetUrl('photovid/IMG_20260927_174855.jpg'), title: 'Eknath' },
+  { id: 'ek-12', src: getAssetUrl('photovid/IMG_20260927_174859.jpg'), title: 'Eknath' },
+  { id: 'ek-13', src: getAssetUrl('photovid/IMG_20260927_174911.jpg'), title: 'Eknath' },
+  { id: 'ek-14', src: getAssetUrl('photovid/IMG_20260927_174918.jpg'), title: 'Eknath' },
+  { id: 'ek-15', src: getAssetUrl('photovid/IMG_20260927_175303.jpg'), title: 'Eknath' },
+  { id: 'ek-16', src: getAssetUrl('photovid/IMG_20260927_175308.jpg'), title: 'Eknath' },
+  { id: 'ek-17', src: getAssetUrl('photovid/IMG_20260927_182516.jpg'), title: 'Eknath' },
+  { id: 'ek-18', src: getAssetUrl('photovid/IMG_20260927_182548.jpg'), title: 'Eknath' },
+  { id: 'ek-19', src: getAssetUrl('photovid/IMG_20260927_182650.jpg'), title: 'Eknath' },
+  { id: 'ek-20', src: getAssetUrl('photovid/IMG_20260927_183651.jpg'), title: 'Eknath' },
+  { id: 'ek-21', src: getAssetUrl('photovid/IMG_20260927_184002.jpg'), title: 'Eknath' }
 ];
 
 export default function AnkitaMuse() {
@@ -558,24 +558,6 @@ export default function AnkitaMuse() {
                   >
                     <Heart size={14} fill="#FF4F81" />
                   </button>
-
-                  {/* Date Badge (No text description) */}
-                  <div style={{
-                    position: 'absolute',
-                    bottom: '10px',
-                    left: '10px',
-                    zIndex: 5,
-                    padding: '3px 10px',
-                    borderRadius: '999px',
-                    background: 'rgba(22, 10, 18, 0.85)',
-                    backdropFilter: 'blur(6px)',
-                    border: '1px solid rgba(255, 179, 198, 0.3)',
-                    fontSize: '0.65rem',
-                    letterSpacing: '0.12em',
-                    color: '#FFE5EC'
-                  }}>
-                    {item.date}
-                  </div>
                 </div>
               </div>
             ))}
@@ -683,15 +665,17 @@ export default function AnkitaMuse() {
 
             {/* Modal Caption */}
             <div style={{ padding: '22px 26px', textAlign: 'center' }}>
-              <div style={{
-                fontSize: '0.74rem',
-                letterSpacing: '0.22em',
-                textTransform: 'uppercase',
-                color: '#FF4F81',
-                marginBottom: '6px'
-              }}>
-                {selectedItem.date}
-              </div>
+              {selectedItem.date && (
+                <div style={{
+                  fontSize: '0.74rem',
+                  letterSpacing: '0.22em',
+                  textTransform: 'uppercase',
+                  color: '#FF4F81',
+                  marginBottom: '6px'
+                }}>
+                  {selectedItem.date}
+                </div>
+              )}
               <h3 style={{
                 fontFamily: "'Cormorant Garamond', Georgia, serif",
                 fontSize: '1.75rem',
