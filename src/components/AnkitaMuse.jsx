@@ -10,7 +10,7 @@ const ANKITA_MEDIA = [
     src: getAssetUrl('photovid/VID-20260928-WA0016.mp4'),
     title: 'Grace In Motion',
     date: '28 SEPTEMBER 2026',
-    caption: 'Some beauty cannot be captured in a single frame�it moves like gentle poetry.',
+    caption: 'Some beauty cannot be captured in a single frame—it moves like gentle poetry.',
     tag: 'Living Memory'
   },
   {
@@ -101,7 +101,7 @@ export default function AnkitaMuse() {
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX || rect.left + rect.width / 2;
     const y = e.clientY || rect.top + rect.height / 2;
-    triggerHeartBurst(x, y, { count: 12, symbols: ['??', '??', '??', '??', '?', '??'] });
+    triggerHeartBurst(x, y, { count: 12, symbols: ['❤️', '💖', '💕', '🌸', '✨', '🩷'] });
   };
 
   const toggleVideoPlay = () => {
