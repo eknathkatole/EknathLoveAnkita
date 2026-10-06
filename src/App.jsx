@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 import OpeningScene from './components/OpeningScene';
 import MilestoneJourney from './components/MilestoneJourney';
+import NightMisunderstanding from './components/NightMisunderstanding';
 import LoveCode from './components/LoveCode';
 import MemoryFrequency from './components/MemoryFrequency';
 import RomanticGallery from './components/RomanticGallery';
@@ -92,6 +93,7 @@ export default function App() {
 
           <main style={{ position: 'relative', zIndex: 2, width: '100%' }}>
             <MilestoneJourney />
+            <NightMisunderstanding />
             <LoveCode />
             <MemoryFrequency />
             <RomanticGallery />

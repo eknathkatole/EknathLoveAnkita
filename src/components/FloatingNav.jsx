@@ -4,15 +4,15 @@ import MusicController from './MusicController';
 export default function FloatingNav({ activeSection, onNavigate }) {
   const primaryItems = [
     { id: 'journey', label: 'JOURNEY' },
+    { id: 'night1145', label: '11:45 PM' },
     { id: 'code520', label: '5201314' },
-    { id: 'frequency', label: 'MOTION' },
     { id: 'gallery', label: 'GALLERY' },
   ];
 
   const secondaryItems = [
+    { id: 'frequency', label: 'MOTION' },
     { id: 'ankita', label: 'ANKITA ♡' },
     { id: 'future', label: 'OUR FUTURE' },
-    { id: 'quiz', label: 'QUIZ' },
     { id: 'final', label: 'FOR YOU' }
   ];
 
